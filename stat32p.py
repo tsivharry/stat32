@@ -10,7 +10,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 import seaborn as sns
-
+# just
 data_raw = pd.read_csv('forestfires_data.csv')
 data_raw.shape
 area_threshold = 0.01; # hectares
