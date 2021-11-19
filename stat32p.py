@@ -61,6 +61,26 @@ ax1.set_xlabel(' x-coordinate')
 ax1.set_ylabel(' y-coordinate')
 plt.show()
 print(data.head())
+
+#t-stastic for distributions :Sep-Aug
+mean_aug=np.mean(data.area[data.month == 'aug'])
+mean_sep=np.mean(data.area[data.month == 'sep'])
+std_aug=np.std(data.area[data.month == 'aug'])
+std_sep=np.std(data.area[data.month == 'sep'])
+nofir_aug=len(data.area[data.month == 'aug'])
+nofir_sep=len(data.area[data.month == 'sep'])
+print(mean_aug,mean_sep,std_aug,std_sep)
+tstat=(mean_sep-mean_aug)/((std_aug**2/nofir_aug)+(std_sep**2/nofir_sep))**0.5
+print(tstat,nofir_aug,nofir_sep)
+from scipy.stats import t
+t_stat =tstat
+dof = min(nofir_aug,nofir_sep)-1
+# p-value for 2-sided test
+pvalue=2*(1 - t.cdf(abs(t_stat), dof))
+print(tstat,nofir_aug,nofir_sep, pvalue)
+
+#Wald test for means to follow
+# same test statistic as T-distribution
 #correl = data.corr()
 #sns.heatmap(correl, vmin=-1, vmax=1, cmap='BrBG')
 plt.show()
