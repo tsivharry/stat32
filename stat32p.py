@@ -26,9 +26,8 @@ plt.hist(np.log(data.area[data.month == 'sep']), 20)
 monthl=['jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec']
 #data['monthn']
 monthend=[]
-for i in data.month:
-
-    monthend.append(monthl.index(i))
+#_listvalue_ for i in list if condition
+monthend=[monthl.index(i) for i in data.month]
 data['monthn']=monthend
 data=data.sort_values('monthn')
 
