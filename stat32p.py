@@ -15,6 +15,7 @@ data_raw = pd.read_csv('forestfires_data.csv')
 data_raw.shape
 area_threshold = 0.01; # hectares
 data = data_raw.loc[data_raw.area > area_threshold]
+#data=data1.loc[data1.area < 200.]
 data_summary = data.describe()
 plt.hist(data.area, 50)
 plt.show()
@@ -22,7 +23,6 @@ plt.hist(np.log(data.area), 50)
 plt.show()
 plt.hist(np.log(data.area[data.month == 'aug']), 20)
 plt.hist(np.log(data.area[data.month == 'sep']), 20)
-
 monthl=['jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec']
 #data['monthn']
 monthend=[]
@@ -61,12 +61,12 @@ ax1.set_xlabel(' x-coordinate')
 ax1.set_ylabel(' y-coordinate')
 plt.show()
 print(data.head())
-
+#data=np.log(data.area)
 #t-stastic for distributions :Sep-Aug
-mean_aug=np.mean(data.area[data.month == 'aug'])
-mean_sep=np.mean(data.area[data.month == 'sep'])
-std_aug=np.std(data.area[data.month == 'aug'])
-std_sep=np.std(data.area[data.month == 'sep'])
+mean_aug=np.mean(np.log(data.area[data.month == 'aug']))
+mean_sep=np.mean(np.log(data.area[data.month == 'sep']))
+std_aug=np.std(np.log(data.area[data.month == 'aug']))
+std_sep=np.std(np.log(data.area[data.month == 'sep']))
 nofir_aug=len(data.area[data.month == 'aug'])
 nofir_sep=len(data.area[data.month == 'sep'])
 print(mean_aug,mean_sep,std_aug,std_sep)
@@ -81,8 +81,17 @@ print(tstat,nofir_aug,nofir_sep, pvalue)
 
 #Wald test for means to follow
 # same test statistic as T-distribution
-#correl = data.corr()
-#sns.heatmap(correl, vmin=-1, vmax=1, cmap='BrBG')
-plt.show()
-#This last line doesnt work at the moment but might be quite useful to summarise the data
-#a = data.groupby('month').describe().unstack(1).reset_index().pivot(index='month', values=0, columns='level_1')
+import scipy
+p_valuesW = scipy.stats.norm.sf(abs(t_stat))*2# twosided
+print(p_valuesW)
+
+# perform Kolmogorov _Smirnov test
+from scipy import stats
+from scipy.stats import ks_2samp
+data1=np.log(data.area[data.month == 'aug'])
+data2=np.log(data.area[data.month == 'sep'])
+data1=(data.area[data.month == 'aug'])
+data2=(data.area[data.month == 'sep'])
+#perform Kolmogorov-Smirnov test
+ks_statistic, p_value = ks_2samp(data1, data2)
+print(ks_statistic,p_value)
