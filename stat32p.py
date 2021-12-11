@@ -36,7 +36,7 @@ fig, ax=plt.subplots(figsize=(10,6))
 ax.set(title = "Plot title here",
        xlabel = "X axis label here",
        ylabel = "Y axis label here")
-
+#new line
 fig, ax=plt.subplots(figsize=(10,6))
 ax.bar(data.month,data.area)
  #Set plot title and axes labels
